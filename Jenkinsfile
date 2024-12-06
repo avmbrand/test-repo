@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        kubectl rollout status deployment/deployment-v1
+                        kubectl rollout status deployment/hello-world-v1
                     """
                 }
             }
