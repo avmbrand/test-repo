@@ -51,11 +51,5 @@ pipeline {
                 }
             }
         }
-
-    post {
-        always {
-            sh 'kubectl get all'
-        }
-        }
     }
 }
