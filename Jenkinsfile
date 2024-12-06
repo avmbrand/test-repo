@@ -1,17 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        // GOOGLE_PROJECT = 'your-gcp-project'
-        // GKE_CLUSTER = 'your-gke-cluster'
-        // GKE_ZONE = 'your-gke-zone'
-        // IMAGE_NAME = 'my-app'
-        // BLUE_VERSION = 'blue'
-        // GREEN_VERSION = 'green'
-        // IMAGE_TAG = "${env.BUILD_ID}"  // Using Jenkins build ID as the image tag
-        // GCR_REGISTRY = 'gcr.io/your-gcp-project'
-    }
-
     stages {
 
         stage('Build Docker Image') {
@@ -23,8 +12,17 @@ pipeline {
                 }
             }
         }
+        stage('Auth to Kubernetes Cluster') {
+            steps {
+                script {
+                    sh """
+                        gcloud container clusters get-credentials cluster-1 --zone=us-central1-c
+                    """
+                }
+            }
+        }
 
-        stage('Deploy Green Version') {
+        stage('Deploy Version 2') {
             steps {
                 script {
                     sh """
@@ -35,19 +33,10 @@ pipeline {
             }
         }
 
-        stage('Switch Traffic to Green') {
-            steps {
-                script {
-                    sh """
-                        kubectl apply -f switch.yaml
-                    """
-                }
-            }
-        }
-
     post {
         always {
             sh 'kubectl get all'
+        }
         }
     }
 }
