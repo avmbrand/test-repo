@@ -27,6 +27,25 @@ pipeline {
                 script {
                     sh """
                         kubectl apply -f deployment-v2.yaml
+                        kubectl apply -f hpa-v2.yaml
+                    """
+                }
+            }
+        }
+
+        stage('wait till the rollout succeed') {
+            steps {
+                script {
+                    sh """
+                        kubectl rollout status deployment/deployment-v2
+                    """
+                }
+            }
+        }
+        stage('switch to version to v2') {
+            steps {
+                script {
+                    sh """
                         kubectl apply -f service-v2.yaml
                     """
                 }
