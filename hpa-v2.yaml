@@ -17,7 +17,7 @@ spec:
           name: http_requests_total
           selector:
             matchLabels:
-              app: hello-world-v2
+              app: hello-world
         target:
           type: AverageValue
           averageValue: "20" 
