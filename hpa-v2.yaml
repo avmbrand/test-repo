@@ -11,13 +11,10 @@ spec:
   minReplicas: 1
   maxReplicas: 10
   metrics:
-    - type: External
-      external:
+    - type: Pods
+      pods:
         metric:
-          name: http_requests_total
-          selector:
-            matchLabels:
-              app: hello-world
+          name: http_requests_per_second
         target:
           type: AverageValue
-          averageValue: "20" 
+          averageValue: "10"
