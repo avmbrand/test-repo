@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-v2
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-v2
+  template:
+    metadata:
+      labels:
+        app: hello-world-v2
+    spec:
+      nodeSelector:
+        cloud.google.com/gke-nodepool: autoscaling-node-pool
+      containers:
+      - name: hello-world
+        image: nmatsui/hello-world-api
+        env:
+        - name: MESSAGE
+          value: "Hello from the Version 2 environment"
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "50m"
+            memory: "100Mi"
