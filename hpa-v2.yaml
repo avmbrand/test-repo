@@ -1,7 +1,7 @@
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hello-world-v2-hpa
+  name: hello-world-v2
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -9,11 +9,4 @@ spec:
     name: hello-world-v2
   minReplicas: 1
   maxReplicas: 10
-  metrics:
-  - type: External
-    metric:
-      name: http_requests_total
-      namespace: default
-    target:
-      type: AverageValue
-      value: "100"
+  targetCPUUtilizationPercentage: 50
