@@ -29,4 +29,4 @@ spec:
             memory: "1Gi"
           requests:
             cpu: "700m"
-            memory: "100Mi"
+            memory: "1Gi"
